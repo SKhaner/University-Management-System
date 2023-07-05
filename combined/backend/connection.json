@@ -1,0 +1,7 @@
+{
+  "database": "phase",
+  "user": "admin",
+  "pass": "Password",
+  "host": "adss23-taylor.cm6zjfeydaum.us-east-1.rds.amazonaws.com",
+  "port": 3306
+}

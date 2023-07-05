@@ -1,0 +1,84 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../static/css/studentInfo.css">
+</head>
+    <a href="/logout">Logout</a>
+    {% if session['user_type'] == 'ADMIN' %}
+    <a href = "/home">Return to Dashboard</a>
+    {% elif session['user_type'] == 'GS' %}
+    <a href = '/home'>Return to Dashboard</a>
+    {% elif session['user_type'] == 'STUDENT' %}
+    <a href = '/home'>Return to Dashboard</a>
+    {% else %}
+    <a href = '/home'>Return to dashboard</a>
+    {% endif %}
+    <h1>Student Transcript</h1>
+    <h2>Name: {{info[0]['first_name']}} {{info[0]['last_name']}}</h2>
+    {% if info is none %}
+    <p>{{message}}</p>
+    {% else %}
+    {% if session['user_type'] == 'ADMIN' or session['user_type'] == 'GS'%}
+    <h3>Advisor ID: {{info[0]['advisor_id']}}</h3>
+    {% endif %}
+    {% if gpa %}
+    <h4>GPA: {{ gpa }}</h4>
+    {% endif %}
+    {% for r in info %}
+    <ul>
+        {% if info[0]['section'] %}
+        <li>
+            CRN: {{r['number']}}
+            Course Name: {{r['title']}}
+            Semester: {{r['semester']}}
+            {% if session['user_type'] == 'ADMIN' or session['user_type'] == 'GS' or session['user_type'] == 'FACULTY'%}
+            Grade: {{r['grade']}}
+                {% if (session.get('user_type') == 'FACULTY')%}
+                {% if r['status'] != 'FINAL' %}
+                <form action="/changeFinalGrade/{{id}}/{{r['section']}}" method="post">
+                    <select name="status">
+                        <option value="FINAL">FINAL</option>
+                        <option value="IN PROGRESS">IN PROGRESS</option>
+                    </select>
+                    <select name="new_grade">
+                        <option value="A">A</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="B-">B-</option>
+                        <option value="C+">C+</option>
+                        <option value="C">C</option>
+                        <option value="F">F</option>
+                    </select>
+                    <button type="submit">Change Grade</button>
+                </form>
+                {% endif %}
+                {% elif (session.get('user_type') == 'ADMIN' or session.get('user_type') == 'GS') %}
+                <form action="/changeFinalGrade/{{id}}/{{r['section']}}" method="post">
+                    <select name="status">
+                        <option value="FINAL">FINAL</option>
+                        <option value="IN PROGRESS">IN PROGRESS</option>
+                    </select>
+                    <select name="new_grade">
+                        <option value="A">A</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="B-">B-</option>
+                        <option value="C+">C+</option>
+                        <option value="C">C</option>
+                        <option value="F">F</option>
+                    </select>
+                    <button type="submit">Change Grade</button>
+                </form>
+                {% endif %}
+            {% else %}
+            Final Grade: {{r['grade']}}
+            {% endif %}
+        </li>
+        {% else %}
+        <h2 style="color: red;">No Course Data</h2>
+        {% endif %}
+    </ul>
+    {% endfor %}
+    {% endif %}
+</html>

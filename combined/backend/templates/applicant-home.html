@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/signin.css">
+    <link rel="stylesheet" href="../static/css/admin-home.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h6>Welcome {{name}}, don't get stressed</h6>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    <h3> Application Status: {{status}} </h3>
+    {% if advisor != None %}
+        <br>
+        Advisor: {{ advisor }}
+        <br>
+    {% endif %}
+    <a href="/application-requirements" class="signin-btn">Requirements</a>
+</body>
+</html>

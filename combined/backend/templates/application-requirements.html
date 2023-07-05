@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/css/admin-home.css">
+    <link rel="stylesheet" href="../static/css/signin.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .alert2 {
+          padding: 20px;
+          margin: 5px;
+          color: #009720;
+          background-color: #FFD5DE;
+        }
+    </style>
+</head>
+<body>
+    {% for message in get_flashed_messages() %}
+    <div class="alert2" >{{message}}</div>
+  {% endfor %}
+  
+  <h4>Current Application Status: {{status}} </h4>
+  </form>
+<h1>
+</h1>
+  <button><a href="/application-form" > Start Application </a></button>
+  <br>
+  <button><a href="/recommendation-letters" > Start Recommendation</a></button>
+  <br>
+  <button><a href="/Submit-transcript" > Start Transcript</a></button>
+  <br>
+  <button><a href="/Apphome" >Return Back Home </a></button>
+  <br>
+  <h4>Submit Application for Review:</h4>
+    <form method="POST", action="/Apprequirements/submit">
+    <input type="submit" value="Submit">
+    </form>
+    <br>
+</body>
+</html>

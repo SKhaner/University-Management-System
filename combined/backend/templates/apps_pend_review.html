@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <title>Applications Pending Review</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <!-- dont we need to link this page into the workers home page?  -->
+    <h1>Application Pending Review</h1>
+    <h3>Needs Reviewing</h3>
+  <ul>
+    {% if rev != None:%}
+      {% for i in rev %}
+      <a href= "/application-review/{{i['studentUID']}}"><li>{{i['first_name']}} {{i['last_name']}}</li> </a>
+      <li>UniversityID:{{i['user_id']}}</li>
+      {% endfor %}
+    {% else: %}
+      None left to review.
+    {% endif %}
+  </ul>
+  <h3> Previously Reviewed </h3>
+  <ul>
+    {% if prevreviewed != None:%}
+      {% for i in prevreviewed %}
+      <a href= "/application-review/{{i['studentUID']}}">
+      <li>{{i['first_name']}} {{i['last_name']}}</li> </a>
+      <li>UniversityID:{{i['user_id']}}</li>
+      {% endfor %}
+    {% else: %}
+      None left to review.
+    {% endif %}
+      
+    <button><a href= "/logout"> logout </a></button>
+  </body>
+  </html>

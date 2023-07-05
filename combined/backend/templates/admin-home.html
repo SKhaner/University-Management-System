@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/admin-home.css">
+    <title>Admin Home</title>
+</head>
+<body>
+<nav class="gs-buttons">
+    <a href="/update-student" class="button">Update Status</a>
+    <a href="/transcript" class="button">View Transcript</a>
+    <a href="/logout" class="button">Logout</a>
+</nav>
+
+<html>
+    <h1>Hello System Admin!</h1>
+    {% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for message in messages %}
+		<h3 style="color: red;">{{ message }}</h3>
+		{% endfor %}
+	{% endif %}
+	{% endwith %}
+    <form action="/adminResults" method="POST">
+        <input type="text" placeholder="Search For Sections or user.." name="search">
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Classes Offered:</h2>
+        {% for x in courses %}
+        <li><a href="/classDetails/{{x['course']}}">{{x['course']}}</a></li>
+        {% endfor %}
+    <h2>Students Enrolled</h2>
+    {% for s in students %}
+        <ul>
+            <li><a href = "/studentDetails/{{s['user_id']}}">{{s['first_name']}} {{s['last_name']}} </a></li>
+        </ul>
+    {% endfor %}
+    <h2>Add User</h2>
+    <p style="color: red;">{{message}}</p>
+    <form action="/adduser" method="post">
+        <label for="fname">First Name:</label>
+        <input type="text" name="fname" id="fname" placeholder="First name" required>
+        <label for="lname">last Name:</label>
+        <input type="text" name="lname" id="lname" placeholder="Last name" required>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="username" required>
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password" placeholder="password" required>
+        <select name="Role" required>
+            <option value="STUDENT">Graduate Student</option>
+            <option value="APPLICANT">APPLICANT</option>
+            <option value="ADVISOR">Advisor</option>
+            <option value="GS">Grad Secretary</option>
+            <option value="FACULTY">Faculty Instructor</option>
+            <option value="ADMIN">System Admin</option>
+        </select>
+        <br><br>
+        <label for="cac">1 if role is faculty and CAC</label>
+        <input type="text" name="cac" id="cac" placeholder="CAC status" value='0' required>
+        <button type="submit">Add User</button>
+    </form>
+    
+</html>
+</body>
+</html>

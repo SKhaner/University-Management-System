@@ -1,0 +1,32 @@
+/* feedback.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #1c87c9;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0a5d94;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/alumni-home.css">
+    <title>Alumni Home</title>
+</head>
+<body>
+<nav class="alumni-buttons">
+    <a href="/update-user-info" class="button">update personal information</a>
+    <a href="/logout" class="button">Logout</a>
+</nav>
+<div class="alumni-info">
+    <p>ID: {{session["user_id"]}}</p>
+    <p>Graduated: {{graduation_date.date}}</p>
+</div>
+<div class="transcript">
+    <ul>
+        {% for entry in transcript %}
+        <li>{{entry["course_id"]}} : {{entry["semester"]}} of {{entry["year"]}} Grade: {{entry["grade"]}}</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

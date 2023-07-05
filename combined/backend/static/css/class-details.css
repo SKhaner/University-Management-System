@@ -1,0 +1,61 @@
+/* class-details.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #1c87c9;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0a5d94;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    list-style-type: none;
+    padding: 10px 0;
+    margin-bottom: 40px;
+}
+
+nav a {
+    margin-right: 10px;
+}
+
+nav a:last-child {
+    margin-right: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+ul li {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+ul li a {
+    color: #1c87c9;
+    transition: color 0.3s;
+}
+
+ul li a:hover {
+    color: #0a5d94;
+}

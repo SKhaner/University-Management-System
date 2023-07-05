@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/gs-home.css">
+    <title>GS Home</title>
+</head>
+<body>
+    <nav class="gs-buttons">
+        <a href="/update-advisor" class="button">Update Advisor</a>
+        <a href="/update-user-info" class="button">Update Personal Information</a>
+        <a href="/update-student" class="button">Update Graduation Status</a>
+        <a href="/getAdvisees" class="button"> Get list of Advisees </a>
+        <a href="/home" class="button">Return to home</a>
+        <a href="/logout" class="button">Logout</a>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for message in messages %}
+		<h3 style="color: blue;">{{ message }}</h3>
+		{% endfor %}
+	{% endif %}
+	{% endwith %}
+    <h2>Students, Applicants, and Alumni</h2>
+    <form action="/gsResults" method="POST">
+		<input type="text" placeholder="Search For Students.." name="search">
+		<button type="submit">Submit</button>
+	</form>
+    {% for s in students %}
+        <ul>
+            <li><a href = "/studentDetails/{{s['user_id']}}">{{s['first_name']}} {{s['last_name']}} </a></li>
+        </ul>
+    {% endfor %}
+    <form action="/changeAdvisor" method="POST">
+		<select id="student_id" name="student_id">
+            {% for x in students %}
+            <option value="{{x.user_id}}"{% if student_id == x.user_id %}selected{% endif %}>{{x["first_name"]}} {{x["last_name"]}}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="advisor">New Advisor:</label>
+        <input type="text" placeholder="Advisor id" name="advisor" style="width: 200px; height: 25px;">
+		<button type="submit">Submit</button>
+	</form>
+    <br><br>
+    <form action="/gsResultsAlumni" method="POST">
+		<input type="text" placeholder="Search For Alumni.." name="search">
+		<button type="submit">Submit</button>
+	</form>
+    <br><br>
+    <form action="/gsResultsAdmitted" method="POST">
+		<input type="text" placeholder="Search For Admitted Students.." name="search">
+		<button type="submit">Submit</button>
+	</form>
+</body>
+
+</html>

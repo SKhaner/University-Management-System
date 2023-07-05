@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% if session['user_type'] == 'STUDENT' %}
+
+<head>
+	<link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#table').DataTable();
+      });
+    </script>
+  <title>Registration Dashboard</title>
+  <style>
+	table {
+	  font-family: arial, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+	
+	td, th {
+	  border: 1px solid #dddddd;
+	  text-align: left;
+	  padding: 8px;
+	}
+	
+	tr:nth-child(even) {
+	  background-color: #dddddd;
+	}
+	</style>
+	
+</head>
+<body>
+	<a href="/logout">Logout</a>
+	<a href="/home">Return to dashboard</a>
+	
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for message in messages %}
+		<h3 style="color: red;">{{ message }}</h3>
+		{% endfor %}
+	{% endif %}
+	{% endwith %}
+	<h1>Course List</h1>
+	<!-- <form action="/regsResults" method="POST">
+		<input type="text" placeholder="Search For Sections.." name="search">
+		<button type="submit">Submit</button>
+	</form> -->
+	<table id="table">
+		<thead>
+		<tr>
+			<th>Subject: </th>
+			<th>Course Number: </th>
+			<th>Section Number: </th>
+			<th>Title</th>
+			<th>Hours: </th>
+			<th>CRN</th>
+			<th>Instructor</th>
+			<th>Meeting Times</th>
+			<th>Status</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+		<tbody>
+		{% for c in sections %}
+		<tr>
+			<td>{{c["department"]}}</td>
+			<td>{{c["course_code"]}}</td>
+			<td>{{c["number"]}}</td>
+			<td>{{c["title"]}}</td>
+			<td>{{c["credit_hours"]}}</td>
+			<td>{{c["crn"]}}</td>
+			<td>{{c["professor_name"]}}</td>
+			<td>{{c["day"]}}: {{c["meeting_times"]}}</td>
+			<td>{{c["studentsEnrolled"]}} of {{c["seatsAvailable"]}} seats taken</td>
+			<td><a href="/addclass/{{c['crn']}}"><button type="button">Add Class</button></a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+	  </table>
+	  <h1>Registered Courses</h1>
+	  <table>
+		<tr>
+			<th>Section ID</th>
+			<th>Course ID</th>
+			<th>Course Title</th>
+			<th>Professor Name</th>
+			<th>Action</th>
+		</tr>
+		{% for record in registered %}
+		<tr>
+			<td>{{ record.crn }}</td>
+			<td>{{ record.course_code }}</td>
+			<td>{{ record.title }}</td>
+			<td>{{ record.professor_name }}</td>
+			{% if record.status != FINAL%}
+			<td><a href="/drop/{{ record.crn }}/{{ record.course_code }}"><button type="button">Drop Class</button></a></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	  </table>
+</body>
+
+	{% elif session['user_type'] == 'sysAdmin' %}
+
+		<head>
+			<title>System Admin View</title>
+		</head>
+		<h1>Welcome, System Admin</h1>
+
+	{% elif session['user_type'] == 'GS' %}
+
+		<head>
+			<title>Graduate Secretary View</title>
+		</head>
+		<h1>Welcome, Graduate Secrerary</h1>
+
+	{% else %}
+
+		<head>
+			<title>Instructor View</title>
+		</head>
+		<h1>Welcome, Instructor</h1>
+
+	{% endif %}
+
+
+</html>

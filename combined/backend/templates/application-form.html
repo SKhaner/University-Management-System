@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/signin.css">
+    <title>Sign In - School Management System</title>
+    <style>
+        .alert2 {
+            padding: 20px;
+            margin: 5px;
+            color: #009720;
+            background-color: #FFD5DE;
+          }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+        <div = alert2>
+            <li>{{ message }}</li>
+        </div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    <button><a href="/home" >Home </a></button>
+    <form action="" method="post">
+
+
+        dateSubmitted DATE NOT NULL,
+        advisor INT(8) NOT NULL,
+        decision enum ('Incomplete Application','Application Submitted', 'Application Materials Missing: T','Application Materials Missing: TR','Application Materials Missing: R', 'Admission Decision: Accepted', 'Admission Decision: Accepted with Aid', 'Admission Decision: Rejected') DEFAULT ('Incomplete Application'),
+        
+        <hr>
+        <h4>Semester Applying For:</h4>
+        <label for="semester"> Semester</label>
+        <select id="semester" name="semester" required {{edit}}>
+            {% if app['semester'] != None: %}
+                <option value="{{app['semester']}}" selected hidden>{{app['semester']}}</option>
+            {%else:%}
+                <option value="" selected disabled hidden>-- Select a Semester --</option>
+            {% endif %}
+            <option value="SPRING">Spring</option>
+            <option value="FALL">Fall</option>
+            <option value="SUMMER">Summer</option>
+        </select>
+            <br>
+        <label for="appYear">Application Year:</label>
+        <select id="appYear" name="appYear" required {{edit}}>
+            {% if app['appYear'] != None: %}
+                <option value="{{app['appYear']}}" selected hidden>{{app['appYear']}}</option>
+            {%else:%}
+                <option value="" selected hidden>Select Your Application Year</option>
+            {% endif %}
+            <option value="1990">2023</option>
+            <option value="1991">2024</option>
+        </select>
+        <label for="degreeType"> Degree Type:</label>
+        <select name="degreeType" id="degreeType" required {{edit}}>
+            {% if app['degreeType'] != None: %}
+                <option value="{{app['degreeType']}}" selected hidden>{{app['degreeType']}}</option>
+            {%else:%}
+                <option value="" selected hidden>Select an Degree type</option>
+            {% endif %}
+            <option value="MS">MS</option>
+            <option value="PhD">PhD</option>
+        </select>
+        <hr>
+        <h3>GRE Scores</h3>
+        <label for="GREVerbal">GRE Verbal Score:</label>
+        <input type="number" name="GREVerbal" id="GREVerbal" value="{{app['GREVerbal']}}" min="130" max="170" {{edit}}>
+        <br>
+        <label for="GREQuantitative">GRE Quantitive Score:</label>
+        <input type="number" name="GREQuantitative" id="GREQuantitative" value="{{app['GREQuantitative']}}" min="130" max="170" {{edit}}>
+        <br>
+        <label for="GREYear">GRE Test Year:</label>
+        <select id="GREYear" name="GREYear" id="GREYear" {{edit}}>
+            {% if app['GREYear'] != None: %}
+                <option value="{{app['GREYear']}}" selected hidden>{{app['GREYear']}}</option>
+            {%else:%}
+                <option selected hidden>Select Your GRE Year</option>
+            {% endif %}
+            {% for i in range(1990,2023): %}
+                <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <H4>GRE Advanced</H4>
+        <label for="GRESubject">Subject:</label>
+        <select id="GRESubject" name="GRESubject" {{edit}} >
+            {% if app['GRESubject'] != None: %}
+                <option value="{{app['GRESubject']}}" selected hidden>{{app['GRESubject']}}</option>
+            {%else:%}
+                <option value="" selected hidden>Select an Degree type</option>
+            {% endif %}
+            <option value="Chemistry">Chemistry</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Psychology">Psychology</option>
+            <option value=NULL>Not Applicable</option>
+        </select>
+        <br>
+        <label for="GREAdvanced">GRE Advanced Score:</label>
+        <input type="number" id="GREAdvanced" name="GREAdvanced" value="{{app['GREAdvanced']}}" min="200" max="990" {{edit}}>
+        <br>
+
+        <hr>
+        <h3>TOEFL scores</h3>
+        <label for="TOEFLscore">TOEFL Score:</label>
+        <input type="number" name="TOEFLscore"  value="{{app['TOEFLscore']}}" min="0" max="30" {{edit}}>
+        <br>
+        <label for="TOEFLdate">TOEFL Year:</label>
+        <select id="TOEFLdate" name="TOEFLdate" id="TOEFLdate" {{edit}}>
+            {% if app['TOEFLdate'] != None: %}
+                <option value="{{app['TOEFLdate']}}" selected hidden>{{app['TOEFLdate']}}</option>
+            {%else:%}
+                <option selected disabled hidden>Select Your TOEFL Year</option>
+            {% endif %}
+            {% for i in range(1990,2023): %}
+                <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <hr>
+        <label for="areas_of_interest">Area of Interest:</label>
+        <input type="text" name="areas_of_interest" id="areas_of_interest" value="{{app['areas_of_interest']}}" {{edit}}>
+        <br>
+        <label for="experience">Experience:</label>
+        <input type="text" name="experience" id="experience" value="{{app['experience']}}" {{edit}}>
+        <br>
+        <hr>
+        <h6>Prior Degrees</h6>
+        <select id="prior_degrees" name="prior_degrees" {{edit}}>
+            {% if app['prior_degrees'] != None: %}
+                <option value="{{app['prior_degrees']}}" selected hidden>{{app['prior_degrees']}}</option>
+            {%else:%}
+                <option selected disabled hidden>Select Latest Degree Recieved</option>
+            {% endif %}
+                <option value="BS">BS</option>
+                <option value="MS">MS</option>
+                <option value="PhD">PhD</option>
+        </select>
+        <br>
+        <label for="gpa">GPA</label>
+        <input type="number" step="0.01" id="gpa" name="gpa" max="4.00" min="0.00" {{edit}}>
+        <br>
+        <label for="major">Major</label>
+        <select id="major" name="major" {{edit}}>
+            {% if app['major'] != None: %}
+                <option value="{{app['major']}}" selected hidden>{{app['major']}}</option>
+            {%else:%}
+                <option selected disabled hidden>Select Previous Major</option>
+            {% endif %}
+            <option value="Computer Science">Computer Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Biology">Biology</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Business">Business</option>
+            <option value="Art">Art</option>
+            <option value="English">English</option>
+            <option value="History">History</option>
+            <option value="Music">Music</option>
+        </select>
+        <br>
+        <label for="grad_year">Graduation Year:</label>
+        <select id="grad_year" name="grad_year" id="grad_year" {{edit}}>
+            {% if app['grad_year'] != None: %}
+                <option value="{{app['grad_year']}}" selected hidden>{{app['grad_year']}}</option>
+            {%else:%}
+                <option selected disabled hidden>Select Your Graduation Year</option>
+            {% endif %}
+            {% for i in range(1990,2023): %}
+                <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="university">University:</label>
+        <input type="text" name="university" id="university" value="{{app['university']}}" {{edit}}>
+        <br>
+
+
+TODO transcripts BOOLEAN,
+
+      
+        <br>
+        <button type="submit" name="submittype" value="save" {{edit}}>Save Application</button>
+        <button type="submit" name="submittype" value="submit" {{edit}}>Submit Application</button>
+    </form>
+    <button><a href="/application-requirements" >Requirements </a></button>
+</body>
+</html>

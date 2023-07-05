@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/update-student.css">
+    <title>Update Student Status - School Management System</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="/home" style="text-decoration: none; color: inherit;">Home</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="update-student-status">
+            <h2>Update Student Status</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <form action="/update-student" method="post">
+                        <tr>
+                            <td>{{ student["user_id"] }}</td>
+                            <td>{{ student["first_name"] }} {{ student["last_name"] }}</td>
+                            <input type="hidden" name="student-id" value="{{ student.user_id }}">
+                            <td>
+                                <select name="status">
+                                    <option value="APPROVED" {% if student.status == "APPROVED" %}selected{% endif %}>APPROVED</option>
+                                    <option value="HAS YET TO APPLY" {% if student.status is none %}selected{% endif %}>HAS YET TO APPLY</option>
+                                    <option value="PENDING" {% if student.status == "PENDING" %}selected{% endif %}>PENDING</option>
+                                    <option value="REJECTED" {% if student.status == "REJECTED" %}selected{% endif %}>REJECTED</option>
+                                    <option value="GRADUATED" {% if student.status == "GRADUATED" %}selected{% endif %}>GRADUATED</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" class="button">Update</button>
+                            </td>
+                        </tr>
+                    </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

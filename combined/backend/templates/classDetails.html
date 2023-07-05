@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Details</title>
+</head>
+<body>
+    <a href="/logout">Logout</a>
+    {% if session['role'] == 'sysAdmin' %}
+    <a href = "/home">Return to Dashboard</a>
+    {% elif session['role'] == 'gradSecretary' %}
+    <a href = '/home'>Return to Dashboard</a>
+    {% else %}
+    <a href = '/home'>Return to dashboard</a>
+    {% endif %}
+    <ul>
+        {% for student in students_in_class %}
+            <li>Name: <a href = "/studentDetails/{{student.user_id}}">{{student.first_name}} {{student.last_name}} </a> ID: {{student.user_id}} Grade: {{student.grade}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

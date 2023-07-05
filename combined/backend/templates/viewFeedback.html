@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../static/css/feedback.css">
+    </head>
+    <body>
+        <a href="/logout">Logout</a>
+        <a href="/home">Return to dashboard</a>
+        
+        <ul>
+            {% for x in feedback %}
+            <li>{{ x.name }}: {{ x.feedback }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

@@ -1,0 +1,79 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007bff;
+    padding: 20px 0;
+}
+
+nav {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.auth-buttons {
+    display: flex;
+}
+
+.signin-btn,
+.create-account-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: 1px solid #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.create-account-btn {
+    background-color: #fff;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.hero-text {
+    width: 50%;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 24px;
+    line-height: 1.5;
+}
+
+.hero-image {
+    width: 50%;
+}
+
+.hero-image img {
+    width: 100%;
+}
+
+footer {
+    background-color: #007bff;
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+}

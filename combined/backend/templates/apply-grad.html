@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/apply-grad.css">
+    <title>Apply for Graduation (hope all the mental breakdowns were worth it) - Struggle University</title>
+    <script>
+        function toggleTextArea() {
+            var degreeSelect = document.getElementById("degree-select");
+            var phdTextArea = document.getElementById("phd-textarea");
+            if (degreeSelect.value === "PhD") {
+                phdTextArea.style.display = "block";
+            } else {
+                phdTextArea.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <a href="landing-page.html" style="text-decoration: none; color: inherit;">School Management System</a>
+        </div>
+    </nav>
+</header>
+<main>
+    <section class="apply-grad">
+        <h2>Apply for Graduation</h2>
+        {% if error %}
+            <br>
+            <p>ERROR: Requirements are not met for application</p>
+            <br>
+        {% endif %}
+        <form method="post" action="/apply-grad">
+            <label for="degree-select">Select your degree:</label>
+            <select id="degree-select" name="degree" onchange="toggleTextArea()">
+                <option value="MS">MS</option>
+                <option value="PhD">PhD</option>
+            </select>
+            <br><br>
+            <label for="major-select">Select your major:</label>
+            <select id="major-select" name="major">
+                {% for x in majors %}
+                <option value='{{x["program_major"]}}'>{{x["program_major"]}}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <div id="phd-textarea" style="display: none;">
+                <label for="phd-description">Please provide a brief description of your research:</label>
+                <br>
+                <textarea id="phd-description" name="phd_description" rows="4" cols="50" placeholder="Enter your research description here"></textarea>
+                <br><br>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    </head>
+    <body>
+        <a href="/logout">Logout</a>
+        <a href="/home">Return to dashboard</a>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <h3 style="color: rgb(8, 140, 43);">{{ message }}</h3>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form action="/submitfeedback" method="POST">
+            <label for="course">Select Course to send feedback:</label>
+            <select id="course" name="course">
+                {% for x in courses %}
+                <option value="{{x.course_code}}">{{x["course_code"]}}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <label for="name">Name:</label>
+            <input type="text" placeholder="Leave Blank for anonymous" name="name" style="width: 200px; height: 25px;">
+            <br><br>
+            <label for="feedback">Write Feedback:</label>
+            <br><br>
+            <textarea placeholder="Your class is way too stressful..." name="feedback" rows="5" cols="50"></textarea>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

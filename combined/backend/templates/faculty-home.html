@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/faculty-home.css">
+    <title>Faculty Home</title>
+</head>
+<body>
+<nav class="gs-buttons">
+    <!-- <a href="/update-student" class="button">Update Status</a> -->
+    <a href="/home" class="button">Return to home</a>
+    <a href="/logout" class="button">Logout</a>
+</nav>
+<h3>Your Sections</h3>
+<form action="/facultyResults" method="POST">
+    <input type="text" placeholder="Search For Sections.." name="search">
+    <button type="submit">Submit</button>
+</form>
+<ul>
+    {% for x in courses %}
+    <li><a href="/classDetails/{{x['course']}}">{{x['course']}} Section: {{x['number']}}</a></li>
+        <ul>
+            <li><a href="/viewFeedback/{{x['course']}}"> Course Feedback! </a></li>
+        </ul>
+    {% endfor %}
+</ul>
+</body>
+</html>

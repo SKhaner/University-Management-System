@@ -1,0 +1,55 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0099cc;
+    padding: 1rem 0;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-left: 2rem;
+    color: #ffffff;
+}
+
+main {
+    max-width: 1000px;
+    margin: 2rem auto;
+}
+
+.update-student-status {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #cccccc;
+}
+
+.button {
+    background-color: #0099cc;
+    color
+:white;
+border: none;
+padding: 0.5rem 1rem;
+font-size: 0.875rem;
+cursor: pointer;
+}
+
+.button:hover {
+background-color: #007399;
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+  <title>Document</title>
+  <style>
+    .alert2 {
+      padding: 20px;
+      margin: 5px;
+      color: #009720;
+      background-color: #FFD5DE;
+    }
+  </style>
+</head>
+<body>
+  {% for message in get_flashed_messages() %}
+      <div class="alert2" >{{message}}</div>
+  {% endfor %}
+  {% if session['workerID'] != None: %}
+    <h1>Application Review</h1>
+    <h3>{{app['lastname']}}, {{app['firstname']}} {{app['minit']}}</h3>
+    <br>
+    UserID: {{app['studentUID']}}
+    <br>
+    Applying for: {{app['semester']}} {{app['appYear']}}
+    <br>
+    Degree type: {{app['degreeType']}}
+    <br>
+    <h5>Credentials:</h5>
+    <H3>GRE Exam</H3>
+    {% if app['GREYear'] != None: %}
+        <ul>
+            <li>Year: {{app['GREYear']}}</li>
+            <li>Verbal: {{app['GREVerbal']}}</li>
+            <li>Quantitative: {{app['GREQuantitative']}}</li>
+        </ul>
+    {% else: %}
+        No GRE Exam scores provided!
+    {% endif %}
+    <h3>GRE Advanced</h3>
+    {% if app['GREAdvanced'] != None: %}
+        <ul>
+            <li>Score: {{app['GREAdvanced']}}</li>
+            <li>Subject: {{app['GRESubject']}}</li>
+        </ul>
+    {% else: %}
+        No GRE Advanced Exam scores provided!
+    {% endif %}
+    <h3>TOEFL Score:</h3>
+    {% if app['TOEFLscore'] != None: %}
+        <ul>
+            <li>Score: {{app['TOEFLscore']}}</li>
+            <li>Date: {{app['TOEFLdate']}}</li>
+        </ul>
+    {% else: %}
+        No TOEFL scores provided!
+    {% endif %}
+    <h3>Transcript Submission</h3>
+    {% if app['transcript'] != 'Not Submitted': %}
+        <ul>
+            <select id="transcript" name="transcript" value="{{app['transcript']}}">
+            <option value="">Recieved Transcript ? </option>
+            <option value="YES">YES</option>
+            <option value="NO">NO</option>
+            </select>
+            <input type="submit">
+        </ul>
+    {% else: %}
+       Transcript Not Provided
+    {% endif %}
+    <h3>Prior Degrees:</h3>
+    <!--IMPLEMNT-->
+    <h3>Areas of Interest:</h3>
+    {% if app['areasofinterest'] != None: %}
+        <p>{{app['areasofinterest']}}</p>
+    {% else: %}
+        No Interests provided!
+    {% endif %}
+    <h3>Experience</h3>
+    {% if app['experience'] != None: %}
+        <p>{{app['experience']}}</p>
+    {% else: %}
+        No Experience provided!
+    {% endif %}
+    <h3>Recomendation letters</h3>
+    {% if letters != None: %}
+        {% for letter in letters: %}
+        <hr>
+        <div>
+        <br>
+        <br style="display: block;">
+            <strong>Sent to:</strong>{{letter['title']}}, {{ letter['sender'] }} <strong> Email:</strong> {{letter['senderemail']}} | <strong>Affiliation:</strong>{{letter['affiliation']}}
+            <br>
+            <h4>Letter:</h4>
+            <p>{{letter['letter']}}</p>
+            {% if letter['rating'] == None: %}
+                <br>
+                <h4>Add letter rating:</h4>
+                <form method="post" action="/appreview/{{app['studentUID']}}/reviewletter">
+                    <input type="hidden" name="letterID" id="letterID" value="{{letter['letterID']}}">
+                    <label for="rating">Rating</label>
+                    <br>
+                    <select id="rating" name="rating" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br>
+                    <label for="generic">Generic</label>
+                    <select id="generic" name="generic" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <br>
+                    <label for="credible">Credible</label>
+                    <select id="credible" name="credible" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <br>
+                    <input type="submit" value="Submit">
+                </form>
+            {% else: %}
+                Rating: {{letter['rating']}}
+                <br>
+                Generic: {{letter['generic']}}
+                <br>
+                Credible: {{letter['credible']}}
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else: %}
+        No Recomendation letters to display
+    {% endif %}
+        <hr>
+    {% if canViewReviews: %}
+        <h2>Reviews</h2>
+        <!--MAKE FOR LOOP TO DISPLAY REVIEWS-->
+        {% if reviews != None: %}
+            {% for review in reviews: %}
+            <hr>
+                <h4>Reviewer: {{review['firstname']}} {{review['lastname']}}</h4>
+                <br>
+                Rating: {{review['rating']}}
+                <br>
+                Deficiency Courses: {{review['deficiencycourses']}}
+                <br>
+                Reasons for Reject: {{review['reasonsforreject']}}
+                <br>
+                ReviewerComments: {{review['comments']}}
+                <br>
+                <br>
+                <br>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+<hr>
+    {% if canAddReview: %}
+        <h2>Submit Grad Admissions Committee (GAS) Review Rating:</h2>
+        <!--MAKE FORM TO INPUT THE REVIEW-->
+        {% if not previouslyReviewed %}
+            <!--display the form-->
+            <form method="post" action="/appreview/{{app['studentUID']}}/reviewsubmit">
+                <input type="hidden" name="workerID" id="workerID" value="{{session['workerID']}}">
+                <input type="hidden" name="studentUID" id="studentUID" value="{{app['studentUID']}}">
+                <label for="rating">Rating</label>
+                <select id="rating" name="rating" required>
+                    <option value="0">Reject</option>
+                    <option value="1">Borderline Admit</option>
+                    <option value="2">Admit without Aid</option>
+                    <option value="3">Admit with Aid</option>
+                </select>
+                <br>
+                <label>Deficiency Courses :</label>
+                <input type="text" name="deficiencycourses">
+                <br>
+                <select id="rating" name="reasonsforreject">
+                    <option value="A">Incomplete Record</option>
+                    <option value="B">Does not meet minimum Requirements</option>
+                    <option value="C">Problems with Letters</option>
+                    <option value="D">Not competitive</option>
+                    <option value="E">Other reasons</option>
+                </select>
+                <label>GAS Reviewer Comments:</label>
+                <br>
+                <input type="text" name="comments" id="comments">
+                <input type="submit">
+            </form>
+        {% else: %}
+            <p>You cannot add more than one review!</p>
+        {% endif %}
+    {% endif %}
+<hr>
+    {% if canChangeApllicantStatus: %}
+        <h2>Final Decision</h2>
+        <!--MAKE FORM TO INPUT FINAL Decision-->
+        {% if not showdecision: %}
+            <form method="post" action="/appreview/{{app['studentUID']}}/submitdecision">
+                <input type="hidden" name="studentUID" id="studentUID" value="{{app['studentUID']}}">
+                <label for="decision">Decision</label>
+                <select id="decision" name="decision" required>
+                    <option value="Admit with Aid">Admit with Aid</option>
+                    <option value="Admit">Admit</option>
+                    <option value="Reject">Reject</option>
+                </select>
+                <br>
+                <label>Recommended Advisor:</label>
+                <input type="text" name="recommendedadvisor">
+                <br>
+                <input type="submit">
+            </form>
+        {% else: %}
+            <!--display the decison-->
+            <br>
+            Final Decison: {{app['decision']}}
+            {% if app['status'] == 'Admit'%}
+                <br>
+                Advisor: {{app['recommendedadvisor']}}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+  {% else: %}
+    <h1>You must be logged in to view this page!</h1>
+    <button><a href="/Apphome"> Home</a></button>
+  {% endif %}
+  <br>
+  <button><a href="/pendingreview"> Back to Reviews</a></button>
+</body>
+</html>

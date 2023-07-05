@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/advisor-home.css">
+    <title>Advisor Home</title>
+</head>
+<body>
+<nav class="gs-buttons">
+    <a href="/update-thesis" class="button">Approve Thesis</a>
+    <a href="/logout" class="button">Logout</a>
+</nav>
+<form method="post" action="/home">
+    <label for="student_id">Select student to view:</label>
+    <select id="student_id" name="student_id">
+        {% for x in student_list %}
+        <option value="{{x.user_id}}"{% if student_id == x.user_id %}selected{% endif %}>{{x["first_name"]}} {{x["last_name"]}}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<H4>{{student_id}}</H4>
+
+<H4>Transcript</H4>
+<ul>
+    {% for x in transcript %}
+    <li>{{x["course_id"]}}: Semester: {{x["semester"]}} Year: {{x["year"]}} Status: {{x["status"]}} Grade:
+        {{x["grade"]}}
+    </li>
+    {% endfor %}
+</ul>
+<H4>Form 1</H4>
+<ul>
+    {% for x in form1 %}
+    <li>{{x["course_id"]}} {{x["course_name"]}}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
